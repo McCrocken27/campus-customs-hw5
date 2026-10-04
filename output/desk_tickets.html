@@ -125,6 +125,11 @@
   ul.plain { margin: 0; padding-left: 20px; }
   ul.plain li { margin-bottom: 8px; }
   .reflection p { margin: 0; line-height: 1.65; }
+  .expected h4 { margin: 16px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--pink-soft); }
+  .mcp-note { margin: 0 0 6px; color: var(--muted); font-size: 14px; }
+  .mcp-list { margin: 0; padding-left: 20px; font-size: 14px; }
+  .mcp-list li { margin-bottom: 4px; }
+  .mcp-list code, .mcp-note code { color: var(--pink); font-size: 13px; }
   footer { text-align: center; color: var(--muted); font-size: 12px; padding-bottom: 24px; }
 </style>
 </head>
@@ -167,6 +172,13 @@
     <div class="card expected">
       <h3>Expected</h3>
       <p>The boss will call inventory, who will check the amount of S bulldog tee's we have. Inventory then tell us which supplier will restock it if necessary.</p>
+      <h4>Expected MCP server and tools</h4>
+      <p class="mcp-note">All shop facts come from one MCP server, <b>campus-customs</b> (<code>mcp_server/server.py</code>, started from <code>.mcp.json</code>), over <code>data/campus_customs_new.db</code>. The backend starts it once per run, and every agent shares it.</p>
+      <ul class="mcp-list">
+        <li><b>Boss:</b> <code>get_ticket(101)</code> to read the order, and <code>get_desk</code> for today's date</li>
+        <li><b>Inventory:</b> <code>check_inventory(CC-TEE-WHITE, S)</code> to count the size S tees</li>
+        <li><b>Inventory:</b> <code>list_vendors</code> (and <code>find_low_stock</code>) to pick the supplier that restocks apparel</li>
+      </ul>
     </div>
     <div class="card">
       <h3>Actual</h3>
@@ -247,6 +259,14 @@
     <div class="card expected">
       <h3>Expected</h3>
       <p>The boss should call facilities, who will tee up a rent payment for a human to easily do.</p>
+      <h4>Expected MCP server and tools</h4>
+      <p class="mcp-note">All shop facts come from one MCP server, <b>campus-customs</b> (<code>mcp_server/server.py</code>, started from <code>.mcp.json</code>), over <code>data/campus_customs_new.db</code>. The backend starts it once per run, and every agent shares it.</p>
+      <ul class="mcp-list">
+        <li><b>Boss:</b> <code>get_ticket(102)</code> and <code>get_desk</code></li>
+        <li><b>Facilities:</b> <code>get_lease_details(1)</code> for the landlord, rent, and due date</li>
+        <li><b>Facilities:</b> <code>quote_payment(rent, 1)</code> to check the amount, whether rent was already paid, and the cash left after</li>
+        <li>Then the payment draft for a human to approve (<code>prepare_payment_request</code>, priced by <code>quote_payment</code>)</li>
+      </ul>
     </div>
     <div class="card">
       <h3>Actual</h3>
@@ -299,6 +319,14 @@
     <div class="card expected">
       <h3>Expected</h3>
       <p>The boss will call inventory to see if the ask is feasible, and may check with accounting to see what a reasonable charge is. It will then call customer service, who will draft a response email for human review</p>
+      <h4>Expected MCP server and tools</h4>
+      <p class="mcp-note">All shop facts come from one MCP server, <b>campus-customs</b> (<code>mcp_server/server.py</code>, started from <code>.mcp.json</code>), over <code>data/campus_customs_new.db</code>. The backend starts it once per run, and every agent shares it.</p>
+      <ul class="mcp-list">
+        <li><b>Boss:</b> <code>get_ticket(103)</code> and <code>get_desk</code></li>
+        <li><b>Inventory:</b> <code>check_inventory(CC-HOOD-NAVY, M)</code> to see if 20 hoodies are feasible</li>
+        <li><b>Accounting:</b> <code>get_product_pricing(CC-HOOD-NAVY)</code> and <code>calculate_margin</code> to find a reasonable bulk price</li>
+        <li><b>Customer Service:</b> <code>check_inventory</code> / <code>get_product_pricing</code> to confirm facts, then the email draft for human review (<code>draft_customer_message</code>)</li>
+      </ul>
     </div>
     <div class="card">
       <h3>Actual</h3>
@@ -377,16 +405,24 @@
   <section role="tabpanel" id="reflections" aria-labelledby="tab-reflections">
     <h2>Reflections</h2>
     <div class="card reflection">
-      <h3>How the agents did</h3>
-      <p>I would rate the boss's performance good overall, he understood the issues and who to delegate them to. I was also impressed by its recommended discount on the bulk order. I thought Facilities nailed the second ticket, and Inventory correctly identified the gaps between stock and order, and identified the correct supplier to remedy them. I liked how accounting checked the recommendations, and it seemed to do a good job of keeping the numbers in place. My issue is with customer service. It needs to wait until after I approve the other agent's work to do its work, as it's too transparent about issues. For example, we shouldn't be telling customers that we don't have items in stock; we should tell them when we expect to be able to fulfill their order.</p>
+      <h3>Ticket 101</h3>
+      <p>101: I would give the performance on this ticket a solid evaluation, but it was very different than expected. Rather than the boss going to inventory, the boss went to accounting and had it crunch numbers to ensure the order hadn't been fulfilled. After it approved it and it went to inventory, inventory also went back to accounting to verify it's work. I don't think accounting needed to be looped in here, and it would have been simpler if inventory handled this, at least one of the times. After that finished, i did not love the response customer service generated. It was too transparent about our inventory issues, and was not very professional. But overall, the agents did work correctly. I would give this a solid rating, but it could be faster and customer service needs to be amended.</p>
     </div>
     <div class="card reflection">
-      <h3>Expected vs. actual</h3>
-      <p>With the exception of the second ticket, which went straight from the boss to facilities, the other tickets had more steps than I expected. In particular, accounting had a larger role than I anticipated, as they handled everything with numbers. It may have been simpler to delegate some of the number tools to other agents, such as inventory.</p>
+      <h3>Ticket 102</h3>
+      <p>102: High marks here. This ticket was fast, and went right from the boss to facilities. That is what I predicted, and I don't think it can be made more efficient.</p>
     </div>
     <div class="card reflection">
-      <h3>What these tools can and can't do</h3>
-      <p>Three problems that Campus Customs could solve with these tools are: preparing purchases of new clothing items, paying the water bill, and handling the return of an item. What they could not do are: manage employee salary/hours (I would need an agent that handles employee information to take care of that), answer questions about store hours/location (there is nothing that deals with the physical location of the store), and estimate time for deliveries (there is no agent that deals with shipping time and how it varies by location).</p>
+      <h3>Ticket 103</h3>
+      <p>103: This also followed more or less what I predicted, but there were more steps than I originally thought. Inventory and accounting seem to work closely together on pricing/quantities, and there may be room to have an agent that can do both of those and limit the overlap. But this was done accurately (minus the same Customer Service issue mentioned in 101), and I think solid/high marks. I think inventory and accounting can be one agent that handles both inventory and how that number of inventory affects the overall cash, as there was lots of back and forth between those two agents.</p>
+    </div>
+    <div class="card reflection">
+      <h3>Problems these agents could solve</h3>
+      <p>Three issues these agents could solve: How do we price a new item (Boss gave a recommendation for a discount in 103), pay the gas bill (very similar to 102), and handling simple online orders (similar to 103, but should be even more straightforward).</p>
+    </div>
+    <div class="card reflection">
+      <h3>Problems these agents would need help with</h3>
+      <p>Three issues these agents would need help on: refund requests (there is no agent that determines if an item is defective), shipping time questions (no agent that can determine how long it takes to ship something for a different location), and handling employee issues, as there is no agent that can deal with sensitive employee information.</p>
     </div>
   </section>
 
