@@ -1,0 +1,61 @@
+{
+  "ticket": {
+    "id": 102,
+    "type": "rent_notice",
+    "requester": "Elm City Properties",
+    "subject": "Rent due",
+    "sku": null,
+    "size": null,
+    "qty": null,
+    "lease_id": 1,
+    "invoice_id": null,
+    "status": "open",
+    "notes": "Email: shop rent due in 2 days.",
+    "created_at": "2026-08-31T11:05:00-04:00"
+  },
+  "decision": {
+    "ticket_id": 102,
+    "decision": "Approve the prepared $2,400 rent payment to Elm City Properties, due 2026-09-02, subject to human review; it has not been paid.",
+    "reasoning": "Facilities confirmed lease 1 is the Chapel Street shop lease with monthly rent of $2,400 due 2026-09-02, two days from the shop date 2026-08-31. Cash on hand is $3,392 and would be $992 after payment; no matching rent payment is recorded, and the payment request is pending human approval.",
+    "recommended_status": "waiting_on_human_approval",
+    "next_steps": [
+      "Human reviews the prepared payment request for $2,400 to Elm City Properties.",
+      "If approved, submit payment before 2026-09-02.",
+      "Confirm and record the payment after execution."
+    ],
+    "missing_data": []
+  },
+  "purchase_orders": [],
+  "payment_requests": [
+    {
+      "ticket_id": 102,
+      "prepared_by": "Facilities",
+      "kind": "rent",
+      "ref_id": 1,
+      "payee": "Elm City Properties",
+      "description": "Rent for Chapel Street shop",
+      "amount": 2400.0,
+      "due_date": "2026-09-02",
+      "days_until_due": 2,
+      "overdue": false,
+      "cash_after_payment": 992.0,
+      "reason": "Rent is due 2026-09-02 and no matching rent payment is recorded; cash covers the amount.",
+      "status": "approved",
+      "approved_by": "human:Joey",
+      "payment_id": 2
+    }
+  ],
+  "customer_messages": [],
+  "delegations": [
+    {
+      "from_agent": "Boss",
+      "to_agent": "Facilities",
+      "task": "Handle rent notice ticket 102. Requester Elm City Properties; subject Rent due; lease_id 1; ticket notes say shop rent due in 2 days; created 2026-08-31; shop date 2026-08-31. Check lease terms, amount, due date, and any payment guidance. Report facts and whether human approval/payment draft is needed.",
+      "depth": 1,
+      "result": "{\"summary\":\"Lease 1 is the Chapel Street shop with Elm City Properties, monthly rent $2,400, due 2026-09-02—2 days from the shop date 2026-08-31. No matching rent payment is recorded; a rent payment request was prepared and is pending human approval, not paid.\",\"facts\":[\"Lease 1: Chapel Street shop; landlord Elm City Properties; monthly rent $2,400; next due 2026-09-02; notes null (get_lease_details).\",\"Shop date 2026-08-31; desk notes null (get_desk).\",\"Rent quote: payee Elm City Properties; amount $2,400; due 2026-09-02; 2 days until due; not overdue; no matching payments; cash on hand $3,392; cash after payment $992 (quote_payment).\",\"Checking balance $3,392 recorded 2026-08-31 (get_cash_accounts).\",\"Only recorded payment is purchase order ref 101 for $8 on 2026-08-31; no rent payment appears (list_payments).\",\"Payment request for ticket 102 saved as pending_human_approval; amount $2,400; payment_id null (prepare_payment_request).\"],\"recommendation\":\"Have a human review and approve the prepared $2,400 rent payment before the 2026-09-02 due date.\",\"needs_boss_decision\":false,\"missing_data\":[]}",
+      "error": null
+    }
+  ],
+  "model_requests": 6,
+  "tool_calls": 9
+}

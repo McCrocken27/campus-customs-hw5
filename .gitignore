@@ -1,0 +1,20 @@
+# Secrets: never commit the real .env (copy .env.example instead)
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node / Vite
+node_modules/
+frontend/dist/
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,101 @@
+{
+  "ticket": {
+    "id": 101,
+    "type": "customer_order",
+    "requester": "Tauhid Zaman",
+    "subject": "Bulldog tee",
+    "sku": "CC-TEE-WHITE",
+    "size": "S",
+    "qty": 1,
+    "lease_id": null,
+    "invoice_id": 501,
+    "status": "open",
+    "notes": "Needs a tee in size S.",
+    "created_at": "2026-08-31T09:15:00-04:00"
+  },
+  "decision": {
+    "ticket_id": 101,
+    "decision": "Do not promise or fulfill the tee yet: current stock is insufficient. Seek human approval for the drafted one-unit purchase order from Bulldog Print Co, while separately verifying invoice 501 before relying on it.",
+    "reasoning": "Inventory reports CC-TEE-WHITE size S at 0 units versus the requested 1, with Bulldog Print Co as the matching vendor and a 5-day lead; a one-unit PO is drafted but not sent. Accounting reports invoice 501 is an open $840.00 overdue vendor invoice, but its quantity and explicit linkage to this ticket are missing, so it cannot be treated as covering the order. Customer Service's draft timed out and no message has been sent.",
+    "recommended_status": "waiting_on_human_approval",
+    "next_steps": [
+      "Confirm invoice 501's quantity and linkage to Ticket 101.",
+      "Obtain human approval for the drafted one-unit PO to Bulldog Print Co; do not send it without approval.",
+      "After approval and vendor confirmation, track the 5-day lead and update fulfillment.",
+      "Retry the customer-message draft for human review; do not promise availability, shipment, or a date before approval and confirmation."
+    ],
+    "missing_data": [
+      "Invoice 501 quantity and explicit linkage to Ticket 101.",
+      "A reviewed customer-message draft; Customer Service timed out."
+    ]
+  },
+  "purchase_orders": [
+    {
+      "ticket_id": 101,
+      "prepared_by": "Accounting",
+      "sku": "CC-TEE-WHITE",
+      "name": "Classic Bulldog Tee",
+      "size": "S",
+      "order_qty": 1,
+      "vendor_id": 1,
+      "vendor_name": "Bulldog Print Co",
+      "lead_days": 5,
+      "expected_arrival": "2026-09-05",
+      "unit_cost": 8.0,
+      "estimated_total": 8.0,
+      "cash_after_order": 3392.0,
+      "cash_after_order_and_open_invoices": 2552.0,
+      "reason": "Ticket 101 requires 1 CC-TEE-WHITE size S with stock 0; invoice 501 says rush reprint but omits quantity and explicit linkage, so it does not establish that this unit was ordered.",
+      "status": "approved",
+      "approved_by": "human:Joey",
+      "payment_id": 1
+    }
+  ],
+  "payment_requests": [],
+  "customer_messages": [
+    {
+      "ticket_id": 101,
+      "prepared_by": "Customer Service",
+      "to": "Tauhid Zaman",
+      "subject": "Update on your Classic Bulldog Tee request",
+      "body": "Hi Tauhid,\n\nThanks for your request for 1 Classic Bulldog Tee in size S. That size is currently out of stock. We’re confirming a possible restock and will follow up once we have an update.\n\nBest,\nCampus Customs",
+      "status": "pending_human_review"
+    }
+  ],
+  "delegations": [
+    {
+      "from_agent": "Boss",
+      "to_agent": "Accounting",
+      "task": "Ticket 101: customer order for Tauhid Zaman, SKU CC-TEE-WHITE, size S, qty 1. Invoice_id 501. Please explain invoice 501 and whether it is for this ticket's item; report relevant cash/invoice facts and any approval needed. Do not pay or change records.",
+      "depth": 1,
+      "result": "{\"summary\":\"Invoice 501 is an open vendor invoice to Bulldog Print Co for a rush reprint of CC-TEE-WHITE size S, so its item identifiers match Ticket 101's requested item. It is not a customer invoice for Tauhid Zaman; the invoice quantity is not stated, so the database does not establish that it covers exactly the one-unit order.\",\"facts\":[\"Ticket 101 is a customer_order for Tauhid Zaman: CC-TEE-WHITE, size S, quantity 1, status open (get_ticket).\",\"Invoice 501: Bulldog Print Co, description 'Rush reprint CC-TEE-WHITE S', amount $840.00, due 2026-08-28, open and overdue by 3 days (get_invoice).\",\"Shop date is 2026-08-31 (get_desk).\",\"Checking balance and total cash are $3,400.00 (get_cash_accounts).\",\"Invoice 501 has no recorded matching payment; cash after payment would be $2,560.00 (quote_payment).\",\"There is one open invoice totaling $840.00, invoice 501 (list_invoices).\",\"No payments are recorded (list_payments).\"],\"recommendation\":\"Do not pay or alter records. Obtain human approval before preparing or paying invoice 501; if approved, it is overdue and the quoted payment would leave $2,560.00 cash. Confirm the vendor invoice quantity or supporting documentation before treating it as covering Ticket 101's single tee.\",\"needs_boss_decision\":true,\"missing_data\":[\"Invoice 501 quantity and explicit linkage to Ticket 101/customer order.\"]}",
+      "error": null
+    },
+    {
+      "from_agent": "Boss",
+      "to_agent": "Inventory",
+      "task": "Ticket 101: Tauhid Zaman wants 1 x CC-TEE-WHITE size S. Accounting reports open vendor invoice 501 to Bulldog Print Co for a rush reprint of CC-TEE-WHITE size S, amount $840.00, but invoice quantity and explicit linkage to this order are missing; do not assume it covers the order. Check current stock and fulfillment. If short, identify vendor and lead time and say whether a purchase order was drafted (draft only, no ordering).",
+      "depth": 1,
+      "result": "{\"summary\":\"Ticket 101 cannot be fulfilled from current stock: CC-TEE-WHITE size S has 0 units, while the ticket requests 1. Bulldog Print Co (vendor 1) is the matching apparel reprint vendor with a 5-day lead; Accounting prepared a draft PO for 1 unit for human approval, and it has not been sent.\",\"facts\":[\"Ticket 101 requests 1 x CC-TEE-WHITE size S and is open (get_ticket).\",\"CC-TEE-WHITE size S: 0 units on hand, located in Aisle B (check_inventory).\",\"Vendor 1 is Bulldog Print Co, specialty apparel reprint, with 5-day lead time (list_vendors).\",\"Invoice 501 is open for $840.00, due 2026-08-28, and lacks quantity and explicit linkage to Ticket 101 (Accounting report: get_invoice).\",\"Draft PO: 1 unit from vendor 1, pending human approval; not sent (Accounting report: prepare_purchase_order, quote_purchase_order).\"],\"recommendation\":\"Obtain human approval for the pending 1-unit PO. Do not treat invoice 501 as covering Ticket 101 because its quantity and linkage are missing; separately verify that invoice before relying on it for fulfillment.\",\"needs_boss_decision\":false,\"missing_data\":[\"Invoice 501 quantity and explicit linkage to Ticket 101 are not recorded.\"]}",
+      "error": null
+    },
+    {
+      "from_agent": "Inventory",
+      "to_agent": "Accounting",
+      "task": "Ticket 101 needs 1 x CC-TEE-WHITE size S; stock is 0. Ticket invoice_id 501 points to Bulldog Print Co, described by Boss as an open vendor invoice for a rush reprint of CC-TEE-WHITE size S, amount $840.00, but invoice quantity and explicit linkage to this order are missing. Please determine what invoice 501 covers and whether it means restock is already ordered; if not, prepare a draft PO for at least 1 unit from vendor id 1 (Bulldog Print Co, apparel reprint, 5-day lead) for human approval. Do not order or pay.",
+      "depth": 2,
+      "result": "{\"summary\":\"Invoice 501 is an open, overdue $840.00 Bulldog Print Co invoice dated due 2026-08-28, described only as “Rush reprint CC-TEE-WHITE S”; it contains no quantity or explicit order linkage, so it does not establish that Ticket 101’s unit has already been ordered. I prepared a draft PO for 1 CC-TEE-WHITE size S from vendor 1 for human approval; it is not sent.\",\"facts\":[\"Invoice 501: Bulldog Print Co, $840.00, open, due 2026-08-28, 3 days overdue, description “Rush reprint CC-TEE-WHITE S” (get_invoice).\",\"CC-TEE-WHITE size S: quantity on hand 0; draft order quantity 1; vendor 1 Bulldog Print Co; lead time 5 days; expected arrival 2026-09-05; estimated total $8.00 (quote_purchase_order).\",\"Cash on hand: $3,400.00; cash after draft PO and open invoices: $2,552.00 (quote_purchase_order, get_cash_accounts).\",\"Draft PO for Ticket 101 saved with status pending_human_approval; not sent (prepare_purchase_order).\"],\"recommendation\":\"Obtain human approval for the pending 1-unit PO. Do not pay invoice 501 under this ticket because payment was not requested; separately verify its missing quantity and linkage before treating it as fulfillment of the restock.\",\"needs_boss_decision\":false,\"missing_data\":[\"Invoice 501’s quantity and explicit linkage to Ticket 101’s requested unit are not recorded.\"]}",
+      "error": null
+    },
+    {
+      "from_agent": "Boss",
+      "to_agent": "Customer Service",
+      "task": "Draft a customer message for Ticket 101 to Tauhid Zaman. Facts: requested 1 x CC-TEE-WHITE size S; current stock is 0; Bulldog Print Co has a 5-day lead; a 1-unit purchase-order draft is pending human approval and has not been sent. Invoice 501 is an open $840 vendor invoice but quantity/linkage to this order are missing, so do not mention it or promise availability, shipment, or a date. Message is for human review only, not sending.",
+      "depth": 1,
+      "result": null,
+      "error": "ModelAPIError: Request timed out."
+    }
+  ],
+  "model_requests": 22,
+  "tool_calls": 29
+}

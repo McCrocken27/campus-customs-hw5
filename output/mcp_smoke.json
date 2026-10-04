@@ -1,0 +1,61 @@
+{
+  "server": "campus-customs",
+  "database": "data/campus_customs_new.db",
+  "all_match_database": true,
+  "checks": [
+    {
+      "tool": "check_inventory",
+      "question": "Do we have enough small Bulldog tees in stock to fulfill ticket 101?",
+      "ticket_id": 101,
+      "arguments": {
+        "sku": "CC-TEE-WHITE",
+        "size": "S"
+      },
+      "output": {
+        "found": true,
+        "sku": "CC-TEE-WHITE",
+        "name": "Classic Bulldog Tee",
+        "size": "S",
+        "qty": 0,
+        "location": "Aisle B"
+      },
+      "matches_database": true,
+      "answer": "No. Ticket 101 needs 1 Classic Bulldog Tee in size S, and there are 0 in stock."
+    },
+    {
+      "tool": "get_product_pricing",
+      "question": "What is the cost and list price of the hoodie in ticket 103?",
+      "ticket_id": 103,
+      "arguments": {
+        "sku": "CC-HOOD-NAVY"
+      },
+      "output": {
+        "found": true,
+        "sku": "CC-HOOD-NAVY",
+        "unit_cost": 22.0,
+        "list_price": 58.0
+      },
+      "matches_database": true,
+      "answer": "The hoodie (CC-HOOD-NAVY) costs $22.00 per unit and lists for $58.00."
+    },
+    {
+      "tool": "get_lease_details",
+      "question": "How much rent do we owe for the lease in ticket 102, who do we owe it to, and when is it due?",
+      "ticket_id": 102,
+      "arguments": {
+        "lease_id": 1
+      },
+      "output": {
+        "found": true,
+        "id": 1,
+        "space_name": "Chapel Street shop",
+        "landlord": "Elm City Properties",
+        "monthly_rent": 2400.0,
+        "next_due": "2026-09-02",
+        "notes": null
+      },
+      "matches_database": true,
+      "answer": "We owe $2,400.00 to Elm City Properties for the Chapel Street shop, due 2026-09-02."
+    }
+  ]
+}

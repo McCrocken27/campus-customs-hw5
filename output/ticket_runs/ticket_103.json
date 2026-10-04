@@ -1,0 +1,98 @@
+{
+  "ticket": {
+    "id": 103,
+    "type": "price_override",
+    "requester": "Yale AI Club",
+    "subject": "Bulk hoodie discount",
+    "sku": "CC-HOOD-NAVY",
+    "size": "M",
+    "qty": 20,
+    "lease_id": null,
+    "invoice_id": null,
+    "status": "open",
+    "notes": "Student org wants 20 hoodies, size M, asking for a bulk discount.",
+    "created_at": "2026-08-31T16:55:00-04:00"
+  },
+  "decision": {
+    "ticket_id": 103,
+    "decision": "Recommend a 15% bulk discount at $49.30 per hoodie for 20 CC-HOOD-NAVY size M units, subject to human approval, while keeping fulfillment contingent on approving the 12-unit restock PO. Do not promise availability or send the drafted customer message until both decisions are approved.",
+    "reasoning": "Inventory found 8 units in stock versus 20 requested, leaving 12 short; Bulldog Print Co. (vendor ID 1) has a 5-day lead and a 12-unit PO draft is pending approval. Accounting found $22.00 unit cost and $58.00 list price; at 15% off, profit is $546.00 and margin is 55.38%. The draft customer message is saved but not sent. Inventory also reported projected cash after the PO and open invoices of -$112.00, requiring human escalation before approving the PO.",
+    "recommended_status": "waiting_on_human_approval",
+    "next_steps": [
+      "Have a human decide whether to approve the 15% discount ($49.30 per unit; proposed total $986.00).",
+      "Have a human review the reported -$112.00 projected cash position and approve or reject the 12-unit Bulldog Print Co. PO.",
+      "If approved, send the customer message after human review; otherwise revise it without promising the 12-unit balance or discount.",
+      "After vendor confirmation and lead-time review, provide the customer a confirmed fulfillment estimate."
+    ],
+    "missing_data": []
+  },
+  "purchase_orders": [
+    {
+      "ticket_id": 103,
+      "prepared_by": "Accounting",
+      "sku": "CC-HOOD-NAVY",
+      "name": "Basic Hoodie Big Yale",
+      "size": "M",
+      "order_qty": 12,
+      "vendor_id": 1,
+      "vendor_name": "Bulldog Print Co",
+      "lead_days": 5,
+      "expected_arrival": "2026-09-05",
+      "unit_cost": 22.0,
+      "estimated_total": 264.0,
+      "cash_after_order": 728.0,
+      "cash_after_order_and_open_invoices": -112.0,
+      "reason": "Ticket 103: stock is 8 on hand against request for 20, leaving a 12-unit shortfall; draft restock from Bulldog Print Co for human approval.",
+      "status": "approved",
+      "approved_by": "human:Joey",
+      "payment_id": 3
+    }
+  ],
+  "payment_requests": [],
+  "customer_messages": [
+    {
+      "ticket_id": 103,
+      "prepared_by": "Customer Service",
+      "to": "Yale AI Club",
+      "subject": "Your Basic Hoodie Big Yale bulk request",
+      "body": "Hello Yale AI Club,\n\nWe currently have 8 Basic Hoodie Big Yale hoodies in navy, size M, available for your request of 20. The remaining 12 depend on a vendor restock that is pending human approval and has not been sent. The team is also reviewing a proposed 15% bulk discount of $49.30 per hoodie, for a proposed total of $986.00, subject to human approval; we are not promising the discount or delivery at this time. We’ll follow up once availability and pricing are confirmed.\n\nCampus Customs",
+      "status": "pending_human_review"
+    }
+  ],
+  "delegations": [
+    {
+      "from_agent": "Boss",
+      "to_agent": "Inventory",
+      "task": "Ticket 103: Yale AI Club requests 20 units of CC-HOOD-NAVY, size M, for a bulk hoodie discount. Check available stock for this SKU/size and report whether quantity 20 can be fulfilled. If short, name a vendor with lead time and say whether a purchase order was drafted.",
+      "depth": 1,
+      "result": "{\"summary\":\"Ticket 103 cannot be fulfilled from current stock: CC-HOOD-NAVY size M has 8 units on hand versus 20 requested, leaving a shortfall of 12. Bulldog Print Co (vendor ID 1), an apparel reprint vendor with a 5-day lead, was selected; Accounting reports that a 12-unit purchase-order draft was saved pending human approval, not sent.\",\"facts\":[\"CC-HOOD-NAVY size M: 8 units in stock (check_inventory).\",\"Ticket 103 requests 20 units, and invoice_id is null (get_ticket).\",\"Bulldog Print Co, vendor ID 1, specialty apparel reprint, lead time 5 days (list_vendors).\",\"Accounting's purchase-order draft covers 12 units from vendor ID 1 and is pending human approval (Accounting report).\",\"Accounting reports cash after the PO and open invoices would be -$112.00 and recommends escalation (Accounting report).\"],\"recommendation\":\"Keep the 12-unit PO draft pending human approval and escalate the reported cash shortfall and overdue invoice to the Boss before approval.\",\"needs_boss_decision\":true,\"missing_data\":[]}",
+      "error": null
+    },
+    {
+      "from_agent": "Boss",
+      "to_agent": "Accounting",
+      "task": "Ticket 103: Yale AI Club requests a bulk discount for 20 units of CC-HOOD-NAVY, size M. Review pricing, margin, and any applicable discount options. Use the required calculation/quote tools; provide a draft quote or payment request only if appropriate, and flag anything needing human approval.",
+      "depth": 1,
+      "result": "{\"summary\":\"For 20 CC-HOOD-NAVY hoodies, size M, list pricing is $58.00 each and cost is $22.00 each. Tested bulk discounts remain above cost: 10% ($52.20 each) yields $604.00 total profit and 57.85% margin; 15% ($49.30 each) yields $546.00 total profit and 55.38% margin; 20% ($46.40 each) yields $488.00 total profit and 52.59% margin. No payment request or purchase order is appropriate for this sales discount request.\",\"facts\":[\"Ticket 103 requests 20 units of CC-HOOD-NAVY, size M (ticket information supplied by Boss).\",\"CC-HOOD-NAVY unit cost $22.00 and list price $58.00 (get_product_pricing).\",\"20 units at list: total revenue $1,160.00, total cost $440.00, total profit $720.00, margin 62.07% (calculate_margin).\",\"20 units at 10% discount ($52.20 each): total profit $604.00, margin 57.85%, not below cost (calculate_margin).\",\"20 units at 15% discount ($49.30 each): total profit $546.00, margin 55.38%, not below cost (calculate_margin).\",\"20 units at 20% discount ($46.40 each): total profit $488.00, margin 52.59%, not below cost (calculate_margin).\"],\"recommendation\":\"Recommend presenting a draft quote at the 15% bulk discount—$49.30 per unit for 20 units, subject to human approval. Customer-facing quote/message still needs human review before sending; Boss should approve the discount level.\",\"needs_boss_decision\":true,\"missing_data\":[]}",
+      "error": null
+    },
+    {
+      "from_agent": "Inventory",
+      "to_agent": "Accounting",
+      "task": "Ticket 103: Yale AI Club requests 20 units of CC-HOOD-NAVY, size M. Inventory shows 8 on hand, so shortfall is 12. Ticket invoice_id is null. Please prepare a purchase-order draft for 12 units from vendor ID 1, Bulldog Print Co (apparel reprint; 5-day lead), for human approval, and report whether the PO was drafted.",
+      "depth": 2,
+      "result": "{\"summary\":\"The purchase-order draft was saved successfully for human approval; it was not sent. The draft is for 12 CC-HOOD-NAVY size M units from Bulldog Print Co, estimated at $264.00, with expected arrival 2026-09-05.\",\"facts\":[\"Ticket 103 requests 20 units of CC-HOOD-NAVY size M (get_ticket).\",\"The purchase-order quote shows 8 on hand, order quantity 12, Bulldog Print Co vendor ID 1, 5-day lead, unit cost $22.00, and estimated total $264.00 (quote_purchase_order).\",\"The draft was saved with status pending_human_approval (prepare_purchase_order).\",\"Cash on hand is $992.00 (get_cash_accounts).\",\"There is one open overdue invoice totaling $840.00; invoice 501 is due 2026-08-28 and is 3 days overdue as of 2026-08-31 (list_invoices, get_desk).\",\"Cash after the PO and open invoices would be -$112.00 (quote_purchase_order).\"],\"recommendation\":\"Keep the PO pending human approval, but escalate the cash shortfall and overdue invoice before approval; the Boss should decide spending priority.\",\"needs_boss_decision\":true,\"missing_data\":[]}",
+      "error": null
+    },
+    {
+      "from_agent": "Boss",
+      "to_agent": "Customer Service",
+      "task": "Ticket 103: Yale AI Club requests 20 CC-HOOD-NAVY hoodies, size M, with a bulk discount. Inventory reports 8 in stock and a 12-unit draft PO from Bulldog Print Co (vendor ID 1), 5-day lead, pending human approval; it has not been sent. Accounting reports list price $58.00/unit and recommends a draft 15% discount quote at $49.30/unit for 20, subject to human approval; total would be $986.00 if approved. Draft a customer reply for human review only. Explain availability is currently 8, the remaining 12 depend on vendor restock, and do not promise delivery, discount, or send anything.",
+      "depth": 1,
+      "result": "{\"summary\":\"Drafted a reply to Yale AI Club and saved it for human review; it was not sent. The message explains that 8 Basic Hoodie Big Yale hoodies in navy, size M, are currently available, while the remaining 12 depend on a pending, unsent vendor restock, and presents the proposed discount as requiring approval.\",\"facts\":[\"Ticket 103 requester is Yale AI Club and requests 20 units of CC-HOOD-NAVY, size M (get_ticket).\",\"Basic Hoodie Big Yale, CC-HOOD-NAVY, size M has quantity 8 (list_inventory).\",\"A 12-unit draft PO from Bulldog Print Co. has a 5-day lead and is pending human approval; it has not been sent (task-provided ticket facts).\",\"Proposed pricing is $49.30 per unit after a 15% discount, with a proposed total of $986.00, subject to human approval (task-provided ticket facts).\",\"Customer message saved with status pending_human_review and not sent (draft_customer_message).\"],\"recommendation\":\"Human reviewer should verify and approve or revise the restock and discount before sending any customer response.\",\"needs_boss_decision\":false,\"missing_data\":[]}",
+      "error": null
+    }
+  ],
+  "model_requests": 17,
+  "tool_calls": 23
+}
